@@ -41,11 +41,16 @@ def get_etf_list(use_sample=False):
         # Get all symbols
         all_symbols = listing.all_symbols()
         
-        # Filter for ETFs (symbols starting with 'E' or containing 'ETF')
+        # Filter for ETFs - Vietnamese ETFs typically have 'Quỹ ETF' in organ_name
         if all_symbols is not None and not all_symbols.empty:
+            # Check if required columns exist
+            if 'symbol' not in all_symbols.columns or 'organ_name' not in all_symbols.columns:
+                print("Warning: Missing required columns in data, using sample data")
+                return sample_etfs
+            
+            # Filter ETFs by organ_name containing 'ETF' (more reliable than symbol prefix)
             etf_symbols = all_symbols[
-                (all_symbols['symbol'].str.startswith('E')) | 
-                (all_symbols['symbol'].str.contains('ETF', case=False))
+                all_symbols['organ_name'].str.contains('ETF', case=False, na=False)
             ]
             
             print(f"Found {len(etf_symbols)} ETFs")
@@ -174,13 +179,15 @@ def save_etf_data_to_excel(etf_list, output_file="etf_data.xlsx", use_sample=Fal
                 # Get historical data
                 historical_data = get_etf_historical_data(symbol, use_sample=use_sample)
                 if not historical_data.empty:
-                    sheet_name = f"{symbol}_Price"[:31]  # Excel sheet name limit
+                    # Excel sheet name limit is 31 characters
+                    sheet_name = f"{symbol}_Price"[:31]
                     historical_data.to_excel(writer, sheet_name=sheet_name, index=False)
                     print(f"Saved price data for {symbol}")
                 
                 # Get fund info
                 fund_info = get_etf_fund_info(symbol, use_sample=use_sample)
                 if not fund_info.empty:
+                    # Excel sheet name limit is 31 characters
                     sheet_name = f"{symbol}_Info"[:31]
                     fund_info.to_excel(writer, sheet_name=sheet_name, index=False)
                     print(f"Saved fund info for {symbol}")

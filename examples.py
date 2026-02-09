@@ -51,7 +51,14 @@ def example_2_get_specific_etf_price(use_sample=False):
             
             # Calculate basic statistics
             avg_volume = df['volume'].mean()
-            price_change = ((df['close'].iloc[-1] - df['close'].iloc[0]) / df['close'].iloc[0]) * 100
+            
+            # Calculate price change with zero check
+            initial_price = df['close'].iloc[0]
+            final_price = df['close'].iloc[-1]
+            if initial_price > 0:
+                price_change = ((final_price - initial_price) / initial_price) * 100
+            else:
+                price_change = 0
             
             print(f"\nStatistics for {symbol}:")
             print(f"  Average Daily Volume: {avg_volume:,.0f}")
@@ -76,10 +83,14 @@ def example_3_compare_etfs(use_sample=False):
         )
         
         if not df.empty:
-            # Calculate returns
+            # Calculate returns with zero check
             initial_price = df['close'].iloc[0]
             final_price = df['close'].iloc[-1]
-            total_return = ((final_price - initial_price) / initial_price) * 100
+            
+            if initial_price > 0:
+                total_return = ((final_price - initial_price) / initial_price) * 100
+            else:
+                total_return = 0
             
             # Calculate volatility (standard deviation of daily returns)
             daily_returns = df['close'].pct_change()
@@ -149,8 +160,15 @@ def example_5_recent_performance(use_sample=False):
         
         # Show trend
         if len(df) >= 2:
-            price_change = latest_close - df['close'].iloc[0]
-            price_change_pct = (price_change / df['close'].iloc[0]) * 100
+            initial_close = df['close'].iloc[0]
+            price_change = latest_close - initial_close
+            
+            # Calculate percentage change with zero check
+            if initial_close > 0:
+                price_change_pct = (price_change / initial_close) * 100
+            else:
+                price_change_pct = 0
+            
             trend = "📈 UP" if price_change > 0 else "📉 DOWN"
             
             print(f"\n  30-Day Trend: {trend}")
