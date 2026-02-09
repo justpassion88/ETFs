@@ -9,7 +9,24 @@ pip install -r requirements.txt
 
 ## Sử dụng cơ bản
 
-### 1. Cập nhật dữ liệu ETF
+### 1. Cập nhật tự động (Scheduled)
+```bash
+# Chạy cập nhật với lịch định sẵn
+python scheduled_update.py
+
+# Hoặc với dữ liệu mẫu (demo)
+python scheduled_update.py --sample
+```
+
+**Lịch tự động:**
+- Chạy mỗi thứ Bảy lúc 6:00 sáng
+- Hoặc kích hoạt thủ công từ GitHub Actions
+
+**Dữ liệu lưu tại:**
+- Thư mục: `ETF/{ngày}/{tháng}/{năm}/`
+- Ví dụ: `ETF/09/02/2026/`
+
+### 2. Cập nhật dữ liệu ETF thủ công
 ```bash
 # Dữ liệu thực (cần kết nối internet)
 python update_etf_data.py
@@ -18,7 +35,7 @@ python update_etf_data.py
 python update_etf_data.py --sample
 ```
 
-### 2. Xem ví dụ
+### 3. Xem ví dụ
 ```bash
 # Chạy tất cả ví dụ
 python examples.py --sample
