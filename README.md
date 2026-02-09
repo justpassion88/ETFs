@@ -38,10 +38,20 @@ pip install -r requirements.txt
 
 ### Cách sử dụng cơ bản
 
-Chạy script để cập nhật dữ liệu ETF:
+**Chế độ thực tế (Lấy dữ liệu từ API):**
+
+Chạy script để cập nhật dữ liệu ETF thực:
 
 ```bash
 python update_etf_data.py
+```
+
+**Chế độ Demo (Sử dụng dữ liệu mẫu):**
+
+Chạy với dữ liệu mẫu để kiểm tra hoặc demo:
+
+```bash
+python update_etf_data.py --sample
 ```
 
 Script sẽ:
@@ -50,13 +60,29 @@ Script sẽ:
 3. Lấy thông tin quỹ
 4. Lưu tất cả dữ liệu vào file `etf_data.xlsx`
 
+### Chạy ví dụ
+
+Xem các ví dụ sử dụng khác nhau:
+
+```bash
+# Với dữ liệu thực
+python examples.py
+
+# Với dữ liệu mẫu
+python examples.py --sample
+```
+
 ### Sử dụng trong code Python
 
 ```python
 from update_etf_data import get_etf_list, get_etf_historical_data, get_etf_fund_info
 
-# Lấy danh sách ETF
+# Lấy danh sách ETF (dữ liệu thực)
 etf_list = get_etf_list()
+print(etf_list)
+
+# Hoặc dùng dữ liệu mẫu cho demo
+etf_list = get_etf_list(use_sample=True)
 print(etf_list)
 
 # Lấy dữ liệu lịch sử giá của một ETF cụ thể

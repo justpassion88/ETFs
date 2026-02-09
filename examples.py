@@ -11,13 +11,13 @@ from update_etf_data import (
 import pandas as pd
 
 
-def example_1_list_all_etfs():
+def example_1_list_all_etfs(use_sample=False):
     """Example 1: Get and display all ETFs."""
     print("\n" + "="*60)
     print("Example 1: List All ETFs")
     print("="*60)
     
-    etf_list = get_etf_list()
+    etf_list = get_etf_list(use_sample=use_sample)
     
     if not etf_list.empty:
         print(f"\nTotal ETFs found: {len(etf_list)}")
@@ -27,7 +27,7 @@ def example_1_list_all_etfs():
         print("No ETFs found")
 
 
-def example_2_get_specific_etf_price():
+def example_2_get_specific_etf_price(use_sample=False):
     """Example 2: Get price data for a specific ETF."""
     print("\n" + "="*60)
     print("Example 2: Get Price Data for Specific ETF")
@@ -41,7 +41,8 @@ def example_2_get_specific_etf_price():
         df = get_etf_historical_data(
             symbol=symbol,
             start_date="2024-01-01",
-            end_date="2024-12-31"
+            end_date="2024-12-31",
+            use_sample=use_sample
         )
         
         if not df.empty:
@@ -57,7 +58,7 @@ def example_2_get_specific_etf_price():
             print(f"  Price Change (Year): {price_change:.2f}%")
 
 
-def example_3_compare_etfs():
+def example_3_compare_etfs(use_sample=False):
     """Example 3: Compare multiple ETFs."""
     print("\n" + "="*60)
     print("Example 3: Compare Multiple ETFs")
@@ -70,7 +71,8 @@ def example_3_compare_etfs():
         df = get_etf_historical_data(
             symbol=symbol,
             start_date="2024-01-01",
-            end_date="2024-12-31"
+            end_date="2024-12-31",
+            use_sample=use_sample
         )
         
         if not df.empty:
@@ -97,7 +99,7 @@ def example_3_compare_etfs():
         print(comparison_df.to_string(index=False))
 
 
-def example_4_get_fund_info():
+def example_4_get_fund_info(use_sample=False):
     """Example 4: Get fund information."""
     print("\n" + "="*60)
     print("Example 4: Get Fund Information")
@@ -106,7 +108,7 @@ def example_4_get_fund_info():
     symbol = "FUEVFVND"
     print(f"\nFetching fund info for {symbol}...")
     
-    fund_info = get_etf_fund_info(symbol)
+    fund_info = get_etf_fund_info(symbol, use_sample=use_sample)
     
     if not fund_info.empty:
         print(f"\nFund information for {symbol}:")
@@ -115,7 +117,7 @@ def example_4_get_fund_info():
         print(f"No fund info available for {symbol}")
 
 
-def example_5_recent_performance():
+def example_5_recent_performance(use_sample=False):
     """Example 5: Analyze recent performance."""
     print("\n" + "="*60)
     print("Example 5: Recent Performance Analysis")
@@ -129,7 +131,7 @@ def example_5_recent_performance():
     end_date = datetime.now().strftime('%Y-%m-%d')
     start_date = (datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')
     
-    df = get_etf_historical_data(symbol, start_date, end_date)
+    df = get_etf_historical_data(symbol, start_date, end_date, use_sample=use_sample)
     
     if not df.empty and len(df) > 0:
         print(f"\nRecent performance for {symbol} (Last 30 days):")
@@ -155,19 +157,22 @@ def example_5_recent_performance():
             print(f"  Price Change: {price_change:,.0f} VND ({price_change_pct:+.2f}%)")
 
 
-def main():
+def main(use_sample=False):
     """Run all examples."""
     print("\n" + "="*60)
     print("ETF Data Examples - Using vnstock")
     print("="*60)
     
+    if use_sample:
+        print("⚠️  Running in SAMPLE DATA mode (no API calls)\n")
+    
     try:
         # Run examples
-        example_1_list_all_etfs()
-        example_2_get_specific_etf_price()
-        example_3_compare_etfs()
-        example_4_get_fund_info()
-        example_5_recent_performance()
+        example_1_list_all_etfs(use_sample=use_sample)
+        example_2_get_specific_etf_price(use_sample=use_sample)
+        example_3_compare_etfs(use_sample=use_sample)
+        example_4_get_fund_info(use_sample=use_sample)
+        example_5_recent_performance(use_sample=use_sample)
         
         print("\n" + "="*60)
         print("All examples completed!")
@@ -180,4 +185,13 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    
+    # Check if --sample flag is provided
+    use_sample = "--sample" in sys.argv or "--demo" in sys.argv
+    
+    if use_sample:
+        print("ℹ️  Note: Using sample data for demonstration")
+        print("    Remove --sample flag to fetch real data from vnstock API\n")
+    
+    main(use_sample=use_sample)
