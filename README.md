@@ -12,6 +12,8 @@ Script này tự động lấy và cập nhật dữ liệu các quỹ ETF đang
 - ✅ Tải dữ liệu lịch sử giá của ETF
 - ✅ Lấy thông tin quỹ (NAV, holdings, performance)
 - ✅ Xuất dữ liệu ra file Excel với nhiều sheet
+- ✅ Cập nhật tự động hàng tuần (6:00 sáng thứ Bảy)
+- ✅ Lưu trữ có tổ chức theo thư mục ngày/tháng/năm
 - ✅ Sử dụng thư viện vnstock - miễn phí và dễ sử dụng
 
 ## Cài đặt
@@ -35,6 +37,29 @@ pip install -r requirements.txt
 ```
 
 ## Sử dụng
+
+### Cập nhật tự động (Scheduled Update)
+
+Dự án được cấu hình để tự động cập nhật dữ liệu ETF vào **6:00 sáng mỗi thứ Bảy hàng tuần** thông qua GitHub Actions.
+
+Dữ liệu sẽ được lưu vào thư mục: `ETF/{ngày}/{tháng}/{năm}/`
+
+Ví dụ: `ETF/09/02/2026/` cho ngày 9 tháng 2 năm 2026
+
+**Chạy cập nhật thủ công:**
+
+```bash
+# Tải dữ liệu thực từ vnstock API
+python scheduled_update.py
+
+# Chạy với dữ liệu mẫu (demo)
+python scheduled_update.py --sample
+```
+
+**Kích hoạt cập nhật từ GitHub:**
+- Vào tab "Actions" trên GitHub
+- Chọn workflow "Weekly ETF Data Update"
+- Click "Run workflow" để chạy ngay
 
 ### Cách sử dụng cơ bản
 

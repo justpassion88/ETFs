@@ -1,0 +1,19 @@
+BÁO CÁO CẬP NHẬT DỮ LIỆU ETF
+==================================================
+
+Thời gian: 09/02/2026 03:58:04
+Thư mục: ETF/09/02/2026
+Số lượng ETF: 8
+
+Danh sách quỹ ETF:
+--------------------------------------------------
+1. FUEVFVND - Quỹ ETF DCVFMVN DIAMOND
+2. E1VFVN30 - Quỹ ETF SSIAM VN30
+3. FUESSV50 - Quỹ ETF SSIAM VNFIN LEAD
+4. FUESSV30 - Quỹ ETF SSIAM VNX50
+5. FUEVN100 - Quỹ ETF DCVFMVN VN100
+6. FUESSVFL - Quỹ ETF SSIAM VNFIN LEAD
+7. FUEDCMID - Quỹ ETF DCDS MIDCAP
+8. FUEMAV30 - Quỹ ETF MAFM VN30
+
+==================================================

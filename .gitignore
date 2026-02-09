@@ -33,10 +33,10 @@ env/
 *.swo
 *~
 
-# Excel output files
-*.xlsx
-*.xls
-*.csv
+# Excel output files (except in ETF folder)
+/*.xlsx
+/*.xls
+/*.csv
 
 # OS
 .DS_Store
